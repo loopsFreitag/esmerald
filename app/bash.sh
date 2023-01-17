@@ -1,6 +1,9 @@
 #!/bin/bash
 
-shiny create .
+APP=app.py
+if [ ! -f "$APP" ]; then
+    shiny create .
+fi
 
 chmod -R 777 .
 
