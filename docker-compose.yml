@@ -7,4 +7,31 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - ./app:/app
+      - .:/src
+    networks:
+      - api
+  
+  mysql:
+    container_name: mysql
+    image: "mysql:8.0.25"
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE:-db}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD:-password}"
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    command: mysqld --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password --sql-mode=""
+    env_file:
+      - .env
+    networks:
+      - api
+    volumes:
+      - mysql_data:/var/lib/mysql:rw
+
+networks:
+  api:
+    driver: bridge
+volumes:
+  mysql_data:
+    driver: local  
