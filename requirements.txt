@@ -1,1 +1,4 @@
 shiny>=0.2.7
+SQLAlchemy 
+Alembic 
+mysql-connector-python
